@@ -1,0 +1,38 @@
+
+
+### --- MySQL ---
+#spring:
+#  application:
+#    name: libraryapi
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/library
+#    username: root
+#    password: root
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#server:
+#  port: 8081
+
+
+
+# --- PostgreSQL ---
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5050/library
+    username: postgres
+    password: erickgx
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+server:
+  port: 8081
