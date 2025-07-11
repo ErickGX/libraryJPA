@@ -11,6 +11,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "autor")
+@ToString(exclude = {"livros"})
 public class Autor {
 
     @Id
@@ -26,7 +27,8 @@ public class Autor {
     @Column(name = "nacionalidade", length = 50, nullable = false)
     private String nacionalidade;
 
-    @Transient
-//    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
+    //por padrao relacionamentos ToMany são Lazy fetch
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @Transient
     private List<Livro> livros = new ArrayList<>();
 }

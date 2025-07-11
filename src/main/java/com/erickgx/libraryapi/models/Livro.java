@@ -33,7 +33,10 @@ public class Livro {
     @Column(precision = 18, scale = 2)
     private BigDecimal preco;
 
-    @ManyToOne
+    //não recomendado o uso de cascade tipe
+    @ManyToOne//(fetch = FetchType.LAZY)//lazy tras apenas o objeto da classe , nao é possivel acessar entidades associadas
+    // manyToOne por padrao é eager , ele tras junto o autor com join no bd
+    // //cascade all faz com que eu consiga salvar um livro apenas setando o autor com new, sem ter persistido antes
     @JoinColumn(name = "id_autor", nullable = false)
     private Autor autor;
 }
