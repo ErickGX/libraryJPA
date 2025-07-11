@@ -28,7 +28,7 @@ public class Autor {
     private String nacionalidade;
 
     //por padrao relacionamentos ToMany são Lazy fetch
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @Transient
+    //@Transient
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
     private List<Livro> livros = new ArrayList<>();
 }

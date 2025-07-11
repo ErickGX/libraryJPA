@@ -95,33 +95,56 @@ public class AutorRepositoryTest {
     @Test
     void SalvarAutorComLivrosTest(){
 
-        Autor autor = new Autor();
-        autor.setNome("Julambison");
-        autor.setDataNascimento(LocalDate.of(2012, 4, 20));
-        autor.setNacionalidade("Italiano");
+        Autor autor1 = new Autor();
+        autor1.setNome("Cristal");
+        autor1.setDataNascimento(LocalDate.of(2002, 9, 2));
+        autor1.setNacionalidade("França");
+
+
 
         Livro livro = new Livro();
-        livro.setIsbn("00001-5312");
-        livro.setPreco(BigDecimal.valueOf(159));
-        livro.setTitulo("Solo Leveling");
+        livro.setIsbn("1111-5312");
+        livro.setPreco(BigDecimal.valueOf(100));
+        livro.setTitulo("Solo max newbie");
         livro.setDataPublicacao(LocalDate.of(1992, 5, 20));
         livro.setGenero(Genero.MISTERIO);
+        livro.setAutor(autor1);
 
         Livro livro2 = new Livro();
-        livro2.setIsbn("66666-5312");
-        livro2.setPreco(BigDecimal.valueOf(159));
-        livro2.setTitulo("50 tons de branco");
-        livro2.setDataPublicacao(LocalDate.of(2002, 12, 13));
-        livro2.setGenero(Genero.ROMANCE);
+        livro2.setIsbn("2222-5312");
+        livro2.setPreco(BigDecimal.valueOf(59));
+        livro2.setTitulo("50 tons de colorido");
+        livro2.setDataPublicacao(LocalDate.of(2005, 2, 10));
+        livro2.setGenero(Genero.CIENCIA);
+        livro2.setAutor(autor1);
 
-        autor.setLivros(new ArrayList<>());
-        autor.getLivros().add(livro);
-        autor.getLivros().add(livro2);
+        Livro livro3 = new Livro();
+        livro3.setIsbn("33333-5312");
+        livro3.setPreco(BigDecimal.valueOf(19));
+        livro3.setTitulo("John wick matando palavras");
+        livro3.setDataPublicacao(LocalDate.of(2006, 9, 10));
+        livro3.setGenero(Genero.FICCAO);
+        livro3.setAutor(autor1);
 
-        autorRepository.save(autor);
+        Livro livro4 = new Livro();
+        livro4.setIsbn("44444-5312");
+        livro4.setPreco(BigDecimal.valueOf(9));
+        livro4.setTitulo("Biografia do jailson mendes");
+        livro4.setDataPublicacao(LocalDate.of(2024, 12, 9));
+        livro4.setGenero(Genero.BIOGRAFIA);
+        livro4.setAutor(autor1);
+
+        autor1.setLivros(new ArrayList<>());
+        autor1.getLivros().add(livro);
+        autor1.getLivros().add(livro2);
+        autor1.getLivros().add(livro3);
+        autor1.getLivros().add(livro4);
+
+        autorRepository.save(autor1);
+
 
         //posso usar com cascade no autor e nao usar o saveAll de livro , apenas salvar o autor usando
-        livroRepository.saveAll(autor.getLivros());//salvando varios livros pra 1 autor
+        livroRepository.saveAll(autor1.getLivros());//salvando varios livros pra 1 autor
         // no front pode ser um formulario que cadastro 1 autor e varios livros de uma vez usando List
 
 
