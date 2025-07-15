@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest
@@ -86,6 +87,74 @@ class LivroRepositoryTest {
     }
 
     @Test
+    void acharPorIsbn(){
+        Optional<Livro> livro = livroRepository.findByIsbn("92930-2312");
+        //sem tratamento pq o é um id existente para Teste
+
+        System.out.println(livro);
+    }
+
+    @Test
+    void acharPorTituloLikeFinal(){
+        List<Livro> livro = livroRepository.findByTituloEndingWith("colorido");
+
+        livro.forEach(System.out::println);
+    }
+
+    @Test
+    void acharPorTituloLikeComeco(){
+        List<Livro> livro = livroRepository.findByTituloStartingWith("50");
+        livro.forEach(System.out::println);
+    }
+
+    @Test
+    void acharPorTituloLikeMeio(){
+        List<Livro> livro = livroRepository.findByTituloContaining("jailson");
+        livro.forEach(System.out::println);
+    }
+
+    @Test
+    void buscarPorTituloAndPreco(){
+        List<Livro> livro = livroRepository.findByTituloAndPreco("Omnicient reader view point", BigDecimal.valueOf(159));
+        livro.forEach(System.out::println);
+    }
+
+    @Test
+    void buscarPorIsbnOrTitulo(){
+        List<Livro> livro = livroRepository.findByIsbnOrTitulo("2222-5312", "Solo max newbie");
+        livro.forEach(System.out::println);
+    }
+
+    @Test
+    void  buscarPrecoMaiorQue(){
+        List<Livro> livro = livroRepository.findByPrecoGreaterThan(BigDecimal.valueOf(99));
+        livro.forEach(System.out::println);
+    }
+
+    @Test
+    void buscarEntreDataPublicacao(){
+        List<Livro> livro = livroRepository.findByDataPublicacaoBetween(
+                LocalDate.of(1992, 1 ,1),
+                LocalDate.of(2006, 10, 10));
+        livro.forEach(System.out::println);
+    }
+
+    @Test
+    void buscarPorTituloOrdenarPorDataPublicacaoAscendente(){
+        List<Livro> livro = livroRepository.findByTituloOrderByDataPublicacaoAsc("Biografia do jailson mendes");
+        livro.forEach(System.out::println);
+    }
+
+    @Test
+    void buscarPorTituloIgnoreCase(){
+        List<Livro> livro = livroRepository.findByTituloIgnoreCase("bOoK oF traNsAcioNAL");
+        livro.forEach(System.out::println);
+    }
+
+
+
+
+    @Test
     void listarLivrosComQueryJPQL(){
         var resultado = livroRepository.listarTodosOrdenadosPorTituloAndPreco();
 
@@ -103,6 +172,19 @@ class LivroRepositoryTest {
     void listarTitulosNaoRepetidosLivros(){
         var livros = livroRepository.listarTitulosDiferentesLivros();
 
+        livros.forEach(System.out::println);
+    }
+
+
+    @Test
+    void listarPorGeneroQueryParamTest(){
+        var livros = livroRepository.findByGenero(Genero.FANTASIA, "preco");
+        livros.forEach(System.out::println);
+    }
+
+    @Test
+    void listarPorGeneroPositionalParameters(){
+        var livros = livroRepository.findByGeneroPositionalParameters("preco", Genero.CIENCIA);
         livros.forEach(System.out::println);
     }
 }
