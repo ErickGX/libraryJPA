@@ -85,6 +85,24 @@ class LivroRepositoryTest {
         System.out.println(livro.getAutor().getNome());
     }
 
+    @Test
+    void listarLivrosComQueryJPQL(){
+        var resultado = livroRepository.listarTodosOrdenadosPorTituloAndPreco();
 
+        resultado.forEach(System.out::println);
+    }
 
+    @Test
+    void listarAutoresDosLivros(){
+        var autores = livroRepository.listarAutoresDosLivros();
+
+        autores.forEach(System.out::println);
+
+    }
+    @Test
+    void listarTitulosNaoRepetidosLivros(){
+        var livros = livroRepository.listarTitulosDiferentesLivros();
+
+        livros.forEach(System.out::println);
+    }
 }
