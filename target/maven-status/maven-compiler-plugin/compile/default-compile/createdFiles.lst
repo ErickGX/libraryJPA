@@ -1,0 +1,6 @@
+com\erickgx\libraryapi\models\Livro.class
+com\erickgx\libraryapi\repository\AutorRepository.class
+com\erickgx\libraryapi\repository\LivroRepository.class
+com\erickgx\libraryapi\models\Autor.class
+com\erickgx\libraryapi\enums\Genero.class
+com\erickgx\libraryapi\Application.class
