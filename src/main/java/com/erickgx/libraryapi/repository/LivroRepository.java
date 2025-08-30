@@ -33,7 +33,6 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
     //select * from livro where isbn =? or titulo = ?
     List<Livro> findByIsbnORTitulo(String isbn, String titulo);
 
-    
     List<Livro> findByPrecoGreaterThan(BigDecimal preco);
 
 }
