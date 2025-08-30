@@ -2,6 +2,9 @@ package com.erickgx.libraryapi.controller;
 
 
 import com.erickgx.libraryapi.controller.dto.AutorDTO;
+import com.erickgx.libraryapi.controller.dto.ErroResposta;
+import com.erickgx.libraryapi.exceptions.OperacaoNaoPermitidaException;
+import com.erickgx.libraryapi.exceptions.RegistroDuplicadoException;
 import com.erickgx.libraryapi.models.Autor;
 import com.erickgx.libraryapi.service.AutorService;
 import org.springframework.http.ResponseEntity;
@@ -25,18 +28,25 @@ public class AutorController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> salvar (@RequestBody AutorDTO autor){
-        var autorEntidade = autor.mapearParaAutor();
-        service.salvar(autorEntidade);
+    public ResponseEntity<Object> salvar (@RequestBody AutorDTO autor){
+       try {
+           var autorEntidade = autor.mapearParaAutor();
+           service.salvar(autorEntidade);
 
-        URI localion = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(autorEntidade.getId())
-                .toUri();
+           URI localion = ServletUriComponentsBuilder
+                   .fromCurrentRequest()
+                   .path("/{id}")
+                   .buildAndExpand(autorEntidade.getId())
+                   .toUri();
 
-        //acesso para o recurso criado
-        return ResponseEntity.created(localion).build();
+           //acesso para o recurso criado
+           return ResponseEntity.created(localion).build();
+       }catch (RegistroDuplicadoException e){
+           var erroDTO = ErroResposta.conflito(e.getMessage());
+           return ResponseEntity.status(erroDTO.status()).body(erroDTO);
+       }
+
+
     }
 
     @GetMapping("{id}")
@@ -59,16 +69,21 @@ public class AutorController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletar(@PathVariable("id") String id){
-        var idAutor = UUID.fromString(id);
-        Optional<Autor> autorOptional = service.obterPorId(idAutor);
+    public ResponseEntity<Object> deletar(@PathVariable("id") String id){
+        try {
+            var idAutor = UUID.fromString(id);
+            Optional<Autor> autorOptional = service.obterPorId(idAutor);
 
-        if(autorOptional.isEmpty()){
-            return ResponseEntity.notFound().build();
+            if (autorOptional.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            service.deletar(autorOptional.get());
+            return ResponseEntity.noContent().build();
+        } catch (OperacaoNaoPermitidaException e){
+            var erroResposta = ErroResposta.respostaPadrao(e.getMessage());
+            return ResponseEntity.status(erroResposta.status()).body(erroResposta);
         }
-
-        service.deletar(autorOptional.get());
-        return ResponseEntity.noContent().build();
     }
 
     //parametros com required false sao opcionais, todos sao true por padrao ao menos que mude para false
@@ -78,15 +93,42 @@ public class AutorController {
             @RequestParam(value = "nacionalidade", required = false) String nacionalidade){
 
         List<Autor> resultados = service.pesquisa(nome, nacionalidade);
-        List<AutorDTO> LISTA = resultados.
-                stream()
-                .map(autor -> new AutorDTO(
-                    autor.getId(),
-                    autor.getNome(), autor.getDataNascimento(),
-                    autor.getNacionalidade())
+        List<AutorDTO> LISTA = resultados.stream().
+                map(autor -> new AutorDTO(
+                        autor.getId(),
+                        autor.getNome(),
+                        autor.getDataNascimento(),
+                        autor.getNacionalidade())
                 ).collect(Collectors.toList());
 
         return ResponseEntity.ok(LISTA);
+
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Object> atualizar(
+            @PathVariable("id") String id,  @RequestBody AutorDTO dto){
+
+        try {
+            var idAutor = UUID.fromString(id);
+            Optional<Autor> autorOptional = service.obterPorId(idAutor);
+
+            if (autorOptional.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            var autor = autorOptional.get();
+            autor.setNome(dto.nome());
+            autor.setNacionalidade(dto.nacionalidade());
+            autor.setDataNascimento(dto.dataNascimento());
+
+            service.atualizar(autor);
+
+            return ResponseEntity.noContent().build();
+        } catch (RegistroDuplicadoException e){
+            var erroDTO = ErroResposta.conflito(e.getMessage());
+            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
+        }
 
     }
 }

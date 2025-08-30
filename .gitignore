@@ -1,0 +1,45 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Gradle
+build/
+.gradle/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Compilação
+out/
+
+# Logs
+*.log
+logs/
+temp/
+tmp/
+
+# IDE: IntelliJ
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# IDE: Eclipse
+.classpath
+.project
+.settings/
+.factorypath
+.apt_generated
+.springBeans
+
+# IDE: VS Code
+.vscode/
+
+# Sistema
+.DS_Store
+Thumbs.db

@@ -20,6 +20,7 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
     // select * from livro where id_autor = id
     List<Livro> findByAutor(Autor autor);
 
+
     //caso pudesse retornar nada , caso campo unico
     Optional<Livro> findByIsbn(String isbn);
 
@@ -87,5 +88,8 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
     //Positional parameters
     @Query(" select l from Livro  l where l.genero =?2 order by ?1 ")
     List<Livro> findByGeneroPositionalParameters(String nomePropriedade, Genero generoLivro);
+
+
+    boolean existsByAutor(Autor autor);
 
 }

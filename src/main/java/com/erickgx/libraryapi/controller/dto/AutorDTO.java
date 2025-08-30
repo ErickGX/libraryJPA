@@ -13,8 +13,6 @@ public record AutorDTO(
         String nacionalidade
 )  {
 
-
-
     //mapeamento do metodo antigo manual
     public Autor mapearParaAutor(){
         Autor autor = new Autor();

@@ -28,11 +28,11 @@ class LivroRepositoryTest {
         Livro livro = new Livro();
         livro.setIsbn("93123-5312");
         livro.setPreco(BigDecimal.valueOf(99));
-        livro.setTitulo("Biografia do king bengala");
+        livro.setTitulo("Biografia do rei careca");
         livro.setDataPublicacao(LocalDate.of(2005, 2, 27));
         livro.setGenero(Genero.FANTASIA);
 
-        var id = UUID.fromString("abf41f24-e385-4f8b-b7df-1f9e3b105af0");
+        var id = UUID.fromString("0e78deaf-9aac-430b-bcc4-dc830e67363e");
         Autor autor = autorRepository.
                 findById(id)
                 .orElse(null);
@@ -61,7 +61,7 @@ class LivroRepositoryTest {
 
         livro.setAutor(autor);
 
-        livroRepository.save(livro);
+        //livroRepository.save(livro);
 
 
     }

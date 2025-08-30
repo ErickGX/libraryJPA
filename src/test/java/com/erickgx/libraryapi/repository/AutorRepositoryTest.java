@@ -85,7 +85,7 @@ public class AutorRepositoryTest {
 
     @Test
     public void deletarAutorByEntity(){ //metodo recebe uma entidadae
-        var id = UUID.fromString("92370484-d365-4acd-b019-f51d3b1aa435");
+        var id = UUID.fromString("ad814835-9f87-4cc0-af85-f0a53f9f2c7e");
 
         var autor  =  autorRepository.findById(id).get(); //metodo recebe uma entidada da busca
 

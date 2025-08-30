@@ -20,7 +20,7 @@ public class Livro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "BINARY(16)")
+   // @Column(columnDefinition = "BINARY(16)") //HABILITAR QUANDO TIVER USANDO MYSQL E TIRAR QUANDO USAR POSTGRESS
     private UUID id;
 
     @Column(length = 20, nullable = false)
