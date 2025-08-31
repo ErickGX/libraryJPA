@@ -7,6 +7,7 @@ import com.erickgx.libraryapi.exceptions.OperacaoNaoPermitidaException;
 import com.erickgx.libraryapi.exceptions.RegistroDuplicadoException;
 import com.erickgx.libraryapi.models.Autor;
 import com.erickgx.libraryapi.service.AutorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,13 +20,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/autores")
+@RequiredArgsConstructor //anotação que substitui o construtor feito manualmente com D.I / private final
 public class AutorController {
 
     private final AutorService service;
 
-    public AutorController(AutorService service){
-        this.service = service;
-    }
 
     @PostMapping
     public ResponseEntity<Object> salvar (@RequestBody AutorDTO autor){

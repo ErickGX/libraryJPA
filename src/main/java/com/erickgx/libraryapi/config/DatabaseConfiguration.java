@@ -36,7 +36,7 @@
 //    }
 //
 //
-//
+// //Substituido pelo application.yml <- mais moderno e recomendado pelo spring boot
 //    @Bean
 //    public DataSource hikariDataSource(){
 //

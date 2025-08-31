@@ -3,18 +3,17 @@ package com.erickgx.libraryapi.validator;
 import com.erickgx.libraryapi.exceptions.RegistroDuplicadoException;
 import com.erickgx.libraryapi.models.Autor;
 import com.erickgx.libraryapi.repository.AutorRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class AutorValidator {
 
-    private AutorRepository repository;
+    private final AutorRepository repository;
 
-    public AutorValidator(AutorRepository repository) {
-        this.repository = repository;
-    }
 
     public void validar(Autor autor){
             if (existeAutorCadastrado(autor)){

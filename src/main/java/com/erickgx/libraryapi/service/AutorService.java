@@ -5,6 +5,7 @@ import com.erickgx.libraryapi.models.Autor;
 import com.erickgx.libraryapi.repository.AutorRepository;
 import com.erickgx.libraryapi.repository.LivroRepository;
 import com.erickgx.libraryapi.validator.AutorValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,17 +13,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor //anotação que substituie o construtor manual com a D.I
 public class AutorService {
 
     private final AutorRepository repository;
     private final AutorValidator validator;
     private final LivroRepository livroRepository;
 
-    public AutorService(AutorRepository repository, AutorValidator validator, LivroRepository livroRepository) {
-        this.repository = repository;
-        this.validator = validator;
-        this.livroRepository = livroRepository;
-    }
+
 
     public Autor salvar (Autor autor){
          validator.validar(autor);

@@ -6,6 +6,7 @@ import com.erickgx.libraryapi.models.Autor;
 import com.erickgx.libraryapi.models.Livro;
 import com.erickgx.libraryapi.repository.AutorRepository;
 import com.erickgx.libraryapi.repository.LivroRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,13 +16,13 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class TransacaoService {
 
-    @Autowired
-    AutorRepository autorRepository;
 
-    @Autowired
-    LivroRepository livroRepository;
+  private final  AutorRepository autorRepository;
+
+  private final  LivroRepository livroRepository;
 
     //livro (titulo, ... , nome_arquivo) -> id.png
     @Transactional
