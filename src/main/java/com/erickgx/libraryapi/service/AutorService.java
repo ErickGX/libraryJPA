@@ -6,6 +6,8 @@ import com.erickgx.libraryapi.repository.AutorRepository;
 import com.erickgx.libraryapi.repository.LivroRepository;
 import com.erickgx.libraryapi.validator.AutorValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,6 +56,25 @@ public class AutorService {
 
         return repository.findAll();
     }
+
+    public List<Autor> pesquisaByExample(String nome , String nacionalidade){
+        var autor =  new Autor();
+        autor.setNome(nome);
+        autor.setNacionalidade(nacionalidade);
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()    //Muito util para pesquisa dinamicas
+                //.withIgnorePaths("id", "dataNascimento", "dataCadastro") usado para ignorar campos caso receba uma entidade inteira como parametro
+                .withIgnoreNullValues() //ignora campos da entidade que nao foram mandados para a pesquisa
+                .withIgnoreCase() // ignora maisculas e minusculas
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+                //StringMatcher.Containing faz a pesquisa %any% , se a palavra contem em qualquer parte da string
+                // seja inicio meio ou fim
+
+        Example<Autor> autorExample = Example.of(autor, matcher);
+        return repository.findAll(autorExample);
+    }
+
 
     public void atualizar(Autor autor){
         if (autor.getId() == null){
