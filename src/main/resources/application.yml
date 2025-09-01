@@ -26,6 +26,8 @@
 
 # --- PostgreSQL ---
 spring:
+  application:
+     name: libraryapi
   datasource:
     url: jdbc:postgresql://localhost:5050/library
     username: postgres
@@ -39,6 +41,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
+  output:
+    ansi:
+      enabled: ALWAYS
 server:
   port: 8081
