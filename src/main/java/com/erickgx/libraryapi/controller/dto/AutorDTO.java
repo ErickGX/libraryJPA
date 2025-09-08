@@ -11,6 +11,7 @@ import java.util.UUID;
 
 
 public record AutorDTO(
+
         UUID id,
 
         //@CPF @CNPJ Anotacoes para documentos brasileiros muito util, olhar documentacoes de classe internas
@@ -28,15 +29,6 @@ public record AutorDTO(
         String nacionalidade
 
 )  {
-
-    //mapeamento do metodo antigo manual
-    public Autor mapearParaAutor(){
-        Autor autor = new Autor();
-        autor.setNome(this.nome);
-        autor.setDataNascimento(this.dataNascimento);
-        autor.setNacionalidade(this.nacionalidade);
-        return autor;
-    }
 
 }
 
