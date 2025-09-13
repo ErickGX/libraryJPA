@@ -1,9 +1,7 @@
 package com.erickgx.libraryapi.service;
 
-import com.erickgx.libraryapi.controller.dto.CadastroLivroDTO;
 import com.erickgx.libraryapi.models.Livro;
 import com.erickgx.libraryapi.repository.LivroRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -4,7 +4,6 @@ import com.erickgx.libraryapi.controller.dto.CadastroLivroDTO;
 import com.erickgx.libraryapi.models.Autor;
 import com.erickgx.libraryapi.models.Livro;
 import com.erickgx.libraryapi.repository.AutorRepository;
-import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
