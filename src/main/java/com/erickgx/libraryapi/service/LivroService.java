@@ -1,6 +1,9 @@
 package com.erickgx.libraryapi.service;
 
+import com.erickgx.libraryapi.controller.dto.CadastroLivroDTO;
+import com.erickgx.libraryapi.models.Livro;
 import com.erickgx.libraryapi.repository.LivroRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,4 +12,10 @@ import org.springframework.stereotype.Service;
 public class LivroService {
 
     private final LivroRepository repository;
+
+
+    public Livro salvar(Livro livro) {
+       return repository.save(livro);
+
+    }
 }

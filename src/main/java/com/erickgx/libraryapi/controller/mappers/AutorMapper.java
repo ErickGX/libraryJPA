@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 public interface AutorMapper {
 
     //Quando o DTO e a Model tem os mss campos com nomes diferentes
-    //é possivel fazer o mapeamento do campo da DTO para a model e vise versa
+    //é possivel fazer o mapeamento do campo da DTO para a model e vice versa
     @Mapping(source = "nome", target = "nome")
     Autor toEntity(AutorDTO dto);
 
