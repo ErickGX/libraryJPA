@@ -29,6 +29,7 @@ public class AutorService {
         return repository.save(autor);
     }
 
+
     public Optional<Autor> obterPorId(UUID id){
         return repository.findById(id);
     }
@@ -41,6 +42,7 @@ public class AutorService {
         repository.delete(autor);
     }
 
+    //metodo mais complexo e verboso , substituido pelo pesquisa ByExample
     public List<Autor> pesquisa(String nome, String nacionalidade){
         if(nome != null & nacionalidade != null){
             return repository.findByNomeAndNacionalidade(nome, nacionalidade);

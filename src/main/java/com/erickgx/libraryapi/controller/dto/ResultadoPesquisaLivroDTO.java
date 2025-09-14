@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record ResultadoPesquisaLivroDTO(
-        UUID idLivro,
+        String id,
         String isbn,
         String titulo,
         LocalDate dataPublicacao,

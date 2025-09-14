@@ -4,6 +4,7 @@ import com.erickgx.libraryapi.enums.Genero;
 import com.erickgx.libraryapi.models.Autor;
 import com.erickgx.libraryapi.models.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 
-public interface LivroRepository extends JpaRepository<Livro, UUID> {
+public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecificationExecutor<Livro> {
 
     // Query methods : https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
     // select * from livro where id_autor = id
@@ -92,4 +93,5 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
 
     boolean existsByAutor(Autor autor);
 
+    UUID id(UUID id);
 }
