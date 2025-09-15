@@ -94,4 +94,6 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
     boolean existsByAutor(Autor autor);
 
     UUID id(UUID id);
+
+    boolean existsByIsbn(String isbn);
 }

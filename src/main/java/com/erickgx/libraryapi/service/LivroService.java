@@ -4,6 +4,7 @@ import com.erickgx.libraryapi.enums.Genero;
 import com.erickgx.libraryapi.models.Livro;
 import com.erickgx.libraryapi.repository.LivroRepository;
 import com.erickgx.libraryapi.repository.specs.LivroSpecs;
+import com.erickgx.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,11 @@ import java.util.UUID;
 public class LivroService {
 
     private final LivroRepository repository;
+    private final LivroValidator validator;
 
 
     public Livro salvar(Livro livro) {
+        validator.validar(livro);
        return repository.save(livro);
 
     }
@@ -73,8 +76,20 @@ public class LivroService {
             specs =  specs.and(LivroSpecs.anoPublicacaoEqual(anoPublicacao));
         }
 
+        if (nomeAutor != null){
+            specs = specs.and(LivroSpecs.nomeAutorLike(nomeAutor));
+        }
+
 
 
         return repository.findAll(specs);
+    }
+
+    public void atualizar(Livro livro) {
+        if (livro.getAutor() == null){
+            throw new IllegalArgumentException("Para atualizar é necessario que o livro já esteja salvo na base");
+        }
+        validator.validar(livro);
+        repository.save(livro);
     }
 }

@@ -12,6 +12,9 @@ import java.util.UUID;
 
 public record CadastroLivroDTO(
 
+
+        String id,
+
         @ISBN
         @NotBlank(message = "Campo Obrigatorio")
         String isbn,
