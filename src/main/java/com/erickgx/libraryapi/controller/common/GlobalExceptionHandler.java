@@ -2,6 +2,7 @@ package com.erickgx.libraryapi.controller.common;
 
 import com.erickgx.libraryapi.controller.dto.ErroCampo;
 import com.erickgx.libraryapi.controller.dto.ErroResposta;
+import com.erickgx.libraryapi.exceptions.CampoInvalidoException;
 import com.erickgx.libraryapi.exceptions.OperacaoNaoPermitidaException;
 import com.erickgx.libraryapi.exceptions.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
@@ -44,8 +45,19 @@ public class GlobalExceptionHandler {
         return ErroResposta.respostaPadrao(e.getMessage());
     }
 
+    @ExceptionHandler(CampoInvalidoException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErroResposta handleCampoInvalidoException (CampoInvalidoException e){
+        return new ErroResposta(
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                "Erro de validação",
+                List.of(new ErroCampo(e.getCampo(), e.getMessage())));
+    }
+
     @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErroResposta handleErroGenerico(RuntimeException e){
+        System.out.println(e.getMessage());
         return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Ocorreu um erro Inesperado"
                 , List.of());

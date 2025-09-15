@@ -33,7 +33,8 @@ spring:
     username: postgres
     password: erickgx
     driver-class-name: org.postgresql.Driver
-
+  main:
+    banner-mode: off
   jpa:
     hibernate:
       ddl-auto: update
