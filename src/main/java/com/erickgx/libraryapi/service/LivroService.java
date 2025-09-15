@@ -6,6 +6,9 @@ import com.erickgx.libraryapi.repository.LivroRepository;
 import com.erickgx.libraryapi.repository.specs.LivroSpecs;
 import com.erickgx.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +41,14 @@ public class LivroService {
     }
 
     //Pesquisas orientadas a objeto usando Specifications
-    public List<Livro> pesquisar(
-            String isbn, String titulo, String nomeAutor, Genero genero , Integer anoPublicacao){
+    public Page<Livro> pesquisar(
+            String isbn,
+            String titulo,
+            String nomeAutor,
+            Genero genero,
+            Integer anoPublicacao,
+            Integer pagina,
+            Integer tamanhoPagina){
 
 
         //root representa os dados a receber , a projeção
@@ -80,9 +89,10 @@ public class LivroService {
             specs = specs.and(LivroSpecs.nomeAutorLike(nomeAutor));
         }
 
+        Pageable pageRequest = PageRequest.of(pagina, tamanhoPagina);
 
 
-        return repository.findAll(specs);
+        return repository.findAll(specs, pageRequest);
     }
 
     public void atualizar(Livro livro) {

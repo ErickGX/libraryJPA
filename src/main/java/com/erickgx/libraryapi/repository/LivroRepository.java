@@ -3,6 +3,8 @@ package com.erickgx.libraryapi.repository;
 import com.erickgx.libraryapi.enums.Genero;
 import com.erickgx.libraryapi.models.Autor;
 import com.erickgx.libraryapi.models.Livro;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +23,8 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
     // select * from livro where id_autor = id
     List<Livro> findByAutor(Autor autor);
 
+        //Pesquisa Paginada
+    Page<Livro> findByAutor(Autor autor, Pageable pageable);
 
     //caso pudesse retornar nada , caso campo unico
     Optional<Livro> findByIsbn(String isbn);
