@@ -1,12 +1,12 @@
 package com.erickgx.libraryapi.config;
 
-
 import com.erickgx.libraryapi.secutiry.CustomUserDetailsService;
 import com.erickgx.libraryapi.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -20,6 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true) //habilita o uso de anotações @Secured e @RolesAllowed nos endpoints
 public class SecurityConfiguration {
 
     @Bean
@@ -43,8 +44,8 @@ public class SecurityConfiguration {
 
                     authorize.requestMatchers("/login").permitAll(); //permite qualquer usuario acessar
                     authorize.requestMatchers(HttpMethod.POST,"/usuarios/**").permitAll(); //permite qualquer usuario acessar
-                    authorize.requestMatchers("/autores/**").hasRole("ADMIN");
-                    authorize.requestMatchers("/livros/**").hasAnyRole("USER","ADMIN");
+                    //authorize.requestMatchers("/autores/**").hasRole("ADMIN");
+                    //authorize.requestMatchers("/livros/**").hasAnyRole("USER","ADMIN");
 
                     authorize.anyRequest().authenticated(); //Qualquer coisa abaixo dessa linha é ignorada
                 })
