@@ -40,6 +40,7 @@ public class SecurityConfiguration {
                     //authorize.requestMatchers(HttpMethod.PUT, "/autores/**").hasRole("ADMIN"); //Definicao de acesso a metodos especificos
 
                     authorize.requestMatchers("/login").permitAll(); //permite qualquer usuario acessar
+                    authorize.requestMatchers(HttpMethod.POST,"/usuarios/**").permitAll(); //permite qualquer usuario acessar
                     authorize.requestMatchers("/autores/**").hasRole("ADMIN");
                     authorize.requestMatchers("/livros/**").hasAnyRole("USER","ADMIN");
 
