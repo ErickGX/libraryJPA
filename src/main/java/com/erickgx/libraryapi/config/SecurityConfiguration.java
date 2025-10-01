@@ -1,6 +1,8 @@
 package com.erickgx.libraryapi.config;
 
 
+import com.erickgx.libraryapi.secutiry.CustomUserDetailsService;
+import com.erickgx.libraryapi.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -55,19 +57,21 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        UserDetails user1 = User.builder()
-                .username("erick")
-                .password(encoder.encode("12345"))
-                .roles("ADMIN")
-                .build();
+    public UserDetailsService userDetailsService(UsuarioService usuarioService) {
+//        UserDetails user1 = User.builder()
+//                .username("erick")
+//                .password(encoder.encode("12345"))
+//                .roles("ADMIN")
+//                .build();
+//
+//        UserDetails user2 = User.builder()
+//                .username("usuario")
+//                .password(encoder.encode("321"))
+//                .roles("USER")
+//                .build();
+//        return new InMemoryUserDetailsManager(user1, user2);
 
-        UserDetails user2 = User.builder()
-                .username("usuario")
-                .password(encoder.encode("321"))
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user1, user2);
+        return new CustomUserDetailsService(usuarioService);
 
     }
 
