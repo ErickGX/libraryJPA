@@ -2,8 +2,10 @@ package com.erickgx.libraryapi.service;
 
 import com.erickgx.libraryapi.enums.Genero;
 import com.erickgx.libraryapi.models.Livro;
+import com.erickgx.libraryapi.models.Usuario;
 import com.erickgx.libraryapi.repository.LivroRepository;
 import com.erickgx.libraryapi.repository.specs.LivroSpecs;
+import com.erickgx.libraryapi.secutiry.SecurityService;
 import com.erickgx.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,10 +26,13 @@ public class LivroService {
 
     private final LivroRepository repository;
     private final LivroValidator validator;
+    private final SecurityService securityService;
 
 
     public Livro salvar(Livro livro) {
         validator.validar(livro);
+        Usuario usuario = securityService.getUsuarioLogado();
+        livro.setUsuario(usuario);
        return repository.save(livro);
 
     }

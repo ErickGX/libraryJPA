@@ -47,8 +47,9 @@ public class Livro {
     @Column(name = "data_atualizacao")
     private LocalDateTime dataAtualizacao;
 
-    @Column(name = "id_usuario")
-    private UUID idUsuario;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
     //não recomendado o uso de cascade tipe
     @ManyToOne//(fetch = FetchType.LAZY)//lazy tras apenas o objeto da classe , nao é possivel acessar entidades associadas

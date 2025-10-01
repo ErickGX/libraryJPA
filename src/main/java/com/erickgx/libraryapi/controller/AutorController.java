@@ -4,11 +4,15 @@ package com.erickgx.libraryapi.controller;
 import com.erickgx.libraryapi.controller.dto.AutorDTO;
 import com.erickgx.libraryapi.controller.mappers.AutorMapper;
 import com.erickgx.libraryapi.models.Autor;
+import com.erickgx.libraryapi.models.Usuario;
 import com.erickgx.libraryapi.service.AutorService;
+import com.erickgx.libraryapi.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -28,7 +32,7 @@ public class AutorController implements GenericController {
 
     @PostMapping
     @PreAuthorize("hasRole('GERENTE')")
-    public ResponseEntity<Void> salvar(@RequestBody @Valid AutorDTO dto) {
+    public ResponseEntity<Void> salvar(@RequestBody @Valid AutorDTO dto, Authentication authentication) {
 
         Autor autor = mapper.toEntity(dto);
         service.salvar(autor);
