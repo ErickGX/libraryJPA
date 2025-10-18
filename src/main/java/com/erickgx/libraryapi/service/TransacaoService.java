@@ -7,7 +7,6 @@ import com.erickgx.libraryapi.models.Livro;
 import com.erickgx.libraryapi.repository.AutorRepository;
 import com.erickgx.libraryapi.repository.LivroRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,18 +14,19 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
+
 @Service
 @RequiredArgsConstructor
 public class TransacaoService {
 
 
-  private final  AutorRepository autorRepository;
+    private final AutorRepository autorRepository;
 
-  private final  LivroRepository livroRepository;
+    private final LivroRepository livroRepository;
 
     //livro (titulo, ... , nome_arquivo) -> id.png
     @Transactional
-    public void salvarLivroComFoto(){
+    public void salvarLivroComFoto() {
         //salvar o livro
         //livroRepository.save(livro);
 
@@ -65,7 +65,7 @@ public class TransacaoService {
     }
 
     @Transactional
-    public void executar(){
+    public void executar() {
 
         Autor autor = new Autor();
         autor.setNome("teste Transação");
@@ -88,8 +88,8 @@ public class TransacaoService {
         //todos os passos sem erro , saveAndFlush apenas sé for realmente necessario
 
 
-        if (autor.getNome().equals("Qualquer erro")){
-            throw  new RuntimeException("Rollback!");
+        if (autor.getNome().equals("Qualquer erro")) {
+            throw new RuntimeException("Rollback!");
         }
 
     }

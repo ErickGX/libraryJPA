@@ -33,7 +33,7 @@ public class LivroService {
         validator.validar(livro);
         Usuario usuario = securityService.getUsuarioLogado();
         livro.setUsuario(usuario);
-       return repository.save(livro);
+        return repository.save(livro);
 
     }
 
@@ -41,7 +41,7 @@ public class LivroService {
         return repository.findById(id);
     }
 
-    public void deletar(Livro livro){
+    public void deletar(Livro livro) {
         repository.delete(livro);
     }
 
@@ -53,7 +53,7 @@ public class LivroService {
             Genero genero,
             Integer anoPublicacao,
             Integer pagina,
-            Integer tamanhoPagina){
+            Integer tamanhoPagina) {
 
 
         //root representa os dados a receber , a projeção
@@ -70,27 +70,27 @@ public class LivroService {
 //                ;
 
         //caso nao pasado nada por parametro vai cair no all - > select * from livro where  0 = 0
-        Specification<Livro> specs = Specification.where((root, query, cb) -> cb.conjunction() );
+        Specification<Livro> specs = Specification.where((root, query, cb) -> cb.conjunction());
 
-        if (isbn != null){
+        if (isbn != null) {
             //query =  query and isbn = :isbn
             specs = specs.and(LivroSpecs.isbnEqual(isbn));
         }
 
-        if (titulo != null){
+        if (titulo != null) {
             specs = specs.and(LivroSpecs.tituloLike(titulo));
         }
 
-        if (genero != null){
+        if (genero != null) {
             specs = specs.and(LivroSpecs.generoEqual(genero));
         }
 
         //posso tirar o LivroSpecs usando o Import static pra classe LivroSpecs , porem vou deixar para melhor compreencao
-        if (anoPublicacao != null){
-            specs =  specs.and(LivroSpecs.anoPublicacaoEqual(anoPublicacao));
+        if (anoPublicacao != null) {
+            specs = specs.and(LivroSpecs.anoPublicacaoEqual(anoPublicacao));
         }
 
-        if (nomeAutor != null){
+        if (nomeAutor != null) {
             specs = specs.and(LivroSpecs.nomeAutorLike(nomeAutor));
         }
 
@@ -101,7 +101,7 @@ public class LivroService {
     }
 
     public void atualizar(Livro livro) {
-        if (livro.getAutor() == null){
+        if (livro.getAutor() == null) {
             throw new IllegalArgumentException("Para atualizar é necessario que o livro já esteja salvo na base");
         }
         validator.validar(livro);

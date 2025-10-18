@@ -23,7 +23,7 @@ public class Autor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-   // @Column(columnDefinition = "BINARY(16)") //HABILITAR QUANDO TIVER USANDO MYSQL E TIRAR QUANDO USAR POSTGRESS
+    // @Column(columnDefinition = "BINARY(16)") //HABILITAR QUANDO TIVER USANDO MYSQL E TIRAR QUANDO USAR POSTGRESS
     private UUID id;
 
     @Column(name = "nome", length = 100, nullable = false)
@@ -47,11 +47,11 @@ public class Autor {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-
+    String teste;
     //por padrao relacionamentos ToMany são Lazy fetch
     //@Transient
     @OneToMany(mappedBy = "autor",
-           // cascade = CascadeType.ALL ,
+            // cascade = CascadeType.ALL ,
             fetch = FetchType.LAZY)
     private List<Livro> livros = new ArrayList<>();
 }

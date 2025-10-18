@@ -26,72 +26,69 @@ public class AutorService {
     private final SecurityService securityService;
 
 
-
-    public Autor salvar (Autor autor){
-         validator.validar(autor);
-         Usuario usuario =  securityService.getUsuarioLogado();
-         autor.setUsuario(usuario);
+    public Autor salvar(Autor autor) {
+        validator.validar(autor);
+        Usuario usuario = securityService.getUsuarioLogado();
+        autor.setUsuario(usuario);
         return repository.save(autor);
     }
 
 
-    public Optional<Autor> obterPorId(UUID id){
+    public Optional<Autor> obterPorId(UUID id) {
         return repository.findById(id);
     }
 
-    public void deletar(Autor autor){
-        if (possuiLivro(autor)){
-            throw new OperacaoNaoPermitidaException(
-                    "Não é permitido excluir um Autor que possui livros cadastrados!");
+    public void deletar(Autor autor) {
+        if (possuiLivro(autor)) {
+            throw new OperacaoNaoPermitidaException("Não é permitido excluir um Autor que possui livros cadastrados!");
         }
         repository.delete(autor);
     }
 
     //metodo mais complexo e verboso , substituido pelo pesquisa ByExample
-    public List<Autor> pesquisa(String nome, String nacionalidade){
-        if(nome != null & nacionalidade != null){
+    public List<Autor> pesquisa(String nome, String nacionalidade) {
+        if (nome != null & nacionalidade != null) {
             return repository.findByNomeAndNacionalidade(nome, nacionalidade);
         }
 
-        if (nome != null){
+        if (nome != null) {
             return repository.findByNome(nome);
         }
 
-        if (nacionalidade != null){
+        if (nacionalidade != null) {
             return repository.findByNacionalidade(nacionalidade);
         }
 
         return repository.findAll();
     }
 
-    public List<Autor> pesquisaByExample(String nome , String nacionalidade){
-        var autor =  new Autor();
+    public List<Autor> pesquisaByExample(String nome, String nacionalidade) {
+        var autor = new Autor();
         autor.setNome(nome);
         autor.setNacionalidade(nacionalidade);
 
-        ExampleMatcher matcher = ExampleMatcher
-                .matching()    //Muito util para pesquisa dinamicas
+        ExampleMatcher matcher = ExampleMatcher.matching()    //Muito util para pesquisa dinamicas
                 //.withIgnorePaths("id", "dataNascimento", "dataCadastro") usado para ignorar campos caso receba uma entidade inteira como parametro
                 .withIgnoreNullValues() //ignora campos da entidade que nao foram mandados para a pesquisa
                 .withIgnoreCase() // ignora maisculas e minusculas
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-                //StringMatcher.Containing faz a pesquisa %any% , se a palavra contem em qualquer parte da string
-                // seja inicio meio ou fim
+        //StringMatcher.Containing faz a pesquisa %any% , se a palavra contem em qualquer parte da string
+        // seja inicio meio ou fim
 
         Example<Autor> autorExample = Example.of(autor, matcher);
         return repository.findAll(autorExample);
     }
 
 
-    public void atualizar(Autor autor){
-        if (autor.getId() == null){
+    public void atualizar(Autor autor) {
+        if (autor.getId() == null) {
             throw new IllegalArgumentException("Para atualizar é necessario que o autor já esteja salvo na base");
         }
         validator.validar(autor);
         repository.save(autor);
     }
 
-    public boolean possuiLivro(Autor autor){
+    public boolean possuiLivro(Autor autor) {
         return livroRepository.existsByAutor(autor);
     }
 }

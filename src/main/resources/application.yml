@@ -35,6 +35,14 @@ spring:
     driver-class-name: org.postgresql.Driver
   main:
     banner-mode: off
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${client_id}
+            client-secret: ${client_secret}
   jpa:
     hibernate:
       ddl-auto: update
@@ -47,3 +55,4 @@ spring:
       enabled: ALWAYS
 server:
   port: 8081
+
