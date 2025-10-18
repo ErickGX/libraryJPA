@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -56,10 +57,10 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-                        return new BCryptPasswordEncoder(10); // '10' refers to the strength (log rounds) of the BCrypt algorithm; the salt is generated automatically
+        return new BCryptPasswordEncoder(10); // '10' refers to the strength (log rounds) of the BCrypt algorithm; the salt is generated automatically
     }
 
-    @Bean
+    //@Bean
     public UserDetailsService userDetailsService(UsuarioService usuarioService) {
 //        UserDetails user1 = User.builder()
 //                .username("erick")
@@ -76,6 +77,12 @@ public class SecurityConfiguration {
 
         return new CustomUserDetailsService(usuarioService);
 
+    }
+
+
+    @Bean //remover o prefixo ROLE_ padrão do Spring Security
+    public GrantedAuthorityDefaults grantedAuthorityDefaults() {
+        return new GrantedAuthorityDefaults(""); //remover o prefixo ROLE_
     }
 
 }

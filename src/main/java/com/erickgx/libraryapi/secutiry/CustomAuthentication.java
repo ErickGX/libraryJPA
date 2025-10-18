@@ -21,7 +21,8 @@ public class CustomAuthentication implements Authentication {
         return this.usuario
                 .getRoles()
                 .stream()
-                .map(role -> new SimpleGrantedAuthority(role))
+                .map(SimpleGrantedAuthority::new)//recomendação de uso de method reference, ele recebe o mesmo parâmetro que o lambda do getRoles()
+                //.map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
     }
 
