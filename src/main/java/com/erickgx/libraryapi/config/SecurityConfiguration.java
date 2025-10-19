@@ -1,6 +1,7 @@
 package com.erickgx.libraryapi.config;
 
 import com.erickgx.libraryapi.secutiry.CustomUserDetailsService;
+import com.erickgx.libraryapi.secutiry.LoginSocialSucessHandler;
 import com.erickgx.libraryapi.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http, LoginSocialSucessHandler sucessHandler) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                                 .httpBasic(Customizer.withDefaults()) //autenticação Basic auth baseado em base64
@@ -51,7 +53,9 @@ public class SecurityConfiguration {
 
                     authorize.anyRequest().authenticated(); //Qualquer coisa abaixo dessa linha é ignorada
                 })
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(oauth2 -> {
+                    oauth2.successHandler(sucessHandler);
+                })
                 .build();
     }
 
