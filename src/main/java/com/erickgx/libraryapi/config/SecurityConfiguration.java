@@ -31,10 +31,9 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                                 .httpBasic(Customizer.withDefaults()) //autenticação Basic auth baseado em base64
-//                .formLogin(configurer -> {
-//                    configurer.loginPage("/login");
-//                })
-                .formLogin(Customizer.withDefaults())
+                .formLogin(configurer -> {
+                    configurer.loginPage("/login");
+                })
                 .authorizeHttpRequests(authorize -> {
 
 
@@ -54,7 +53,9 @@ public class SecurityConfiguration {
                     authorize.anyRequest().authenticated(); //Qualquer coisa abaixo dessa linha é ignorada
                 })
                 .oauth2Login(oauth2 -> {
-                    oauth2.successHandler(sucessHandler);
+                    oauth2
+                            .loginPage("/login")
+                            .successHandler(sucessHandler);
                 })
                 .build();
     }
