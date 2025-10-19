@@ -47,7 +47,6 @@ public class Autor {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    String teste;
     //por padrao relacionamentos ToMany são Lazy fetch
     //@Transient
     @OneToMany(mappedBy = "autor",

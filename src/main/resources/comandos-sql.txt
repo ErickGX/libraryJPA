@@ -33,5 +33,6 @@ create database library;
     id uuid not null primary key,
     login varchar(20) not null unique,
     senha varchar(300) not null,
+    email varchar(100) not null,
     roles varchar[] not null
   ):

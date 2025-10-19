@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import java.lang.reflect.Array;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -20,11 +20,14 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column
+    @Column(unique = true, nullable = false)
     private String login;
 
-    @Column
+    @Column(nullable = false)
     private String senha;
+
+    @Column(nullable = false)
+    private String email;
 
     @Type(ListArrayType.class) //hypersistence-utils
     @Column(name = "roles", columnDefinition = "varchar[]")
